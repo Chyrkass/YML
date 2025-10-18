@@ -2,6 +2,433 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAML Tutorial - Полное руководство по YAML</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .editor-section, .theory-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        .code-editor {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            background: #1e1e1e;
+            color: #f8f8f2;
+            border: none;
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .output {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+
+        .example {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        code {
+            background: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .yaml-key { color: #f92672; }
+        .yaml-string { color: #a6e22e; }
+        .yaml-number { color: #ae81ff; }
+        .yaml-comment { color: #75715e; }
+
+        .tutorial-steps {
+            margin: 1rem 0;
+        }
+
+        .step {
+            background: #e8f4fc;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+
+        .quiz-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .options label {
+            display: block;
+            margin: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 YAML Tutorial</h1>
+            <p class="subtitle">Изучаем YAML: от основ до продвинутого уровня</p>
+        </header>
+
+        <div class="main-content">
+            <div class="theory-section">
+                <h2>📚 Основы YAML</h2>
+                
+                <div class="tutorial-steps">
+                    <div class="step">
+                        <h3>1. Что такое YAML?</h3>
+                        <p>YAML (YAML Ain't Markup Language) - это человеко-читаемый формат для сериализации данных. Используется для конфигурационных файлов, данных приложений и многого другого.</p>
+                    </div>
+
+                    <div class="step">
+                        <h3>2. Базовый синтаксис</h3>
+                        <p><strong>Пары ключ-значение:</strong></p>
+                        <div class="example">
+                            <code>ключ: значение</code>
+                        </div>
+                        <p><strong>Списки:</strong></p>
+                        <div class="example">
+                            <code>- элемент1<br>- элемент2<br>- элемент3</code>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>3. Типы данных</h3>
+                        <ul>
+                            <li><strong>Строки:</strong> name: "John"</li>
+                            <li><strong>Числа:</strong> age: 25</li>
+                            <li><strong>Булевы:</strong> active: true</li>
+                            <li><strong>Null:</strong> value: null</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>4. Вложенные структуры</h3>
+                        <p>YAML поддерживает сложные вложенные структуры через отступы:</p>
+                        <div class="example">
+                            <code>person:<br>&nbsp;&nbsp;name: "Alice"<br>&nbsp;&nbsp;age: 30<br>&nbsp;&nbsp;hobbies:<br>&nbsp;&nbsp;&nbsp;&nbsp;- reading<br>&nbsp;&nbsp;&nbsp;&nbsp;- swimming</code>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>5. Многострочные строки</h3>
+                        <p>Используйте | для сохранения переносов строк:</p>
+                        <div class="example">
+                            <code>description: |<br>&nbsp;&nbsp;Это многострочный<br>&nbsp;&nbsp;текст с сохранением<br>&nbsp;&nbsp;переносов строк.</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-section">
+                <h2>🛠️ Интерактивный редактор</h2>
+                
+                <div class="code-editor">
+                    <textarea id="yamlInput" placeholder="Введите ваш YAML код здесь..."># Пример конфигурации пользователя
+user:
+  name: "Иван Петров"
+  age: 28
+  active: true
+  skills:
+    - Python
+    - JavaScript
+    - YAML
+  contacts:
+    email: "ivan@example.com"
+    phone: "+7-999-123-45-67"
+
+settings:
+  theme: "dark"
+  notifications: false
+  language: "ru"</textarea>
+                </div>
+
+                <button onclick="validateYAML()">✅ Проверить синтаксис</button>
+                <button onclick="formatYAML()">🎨 Форматировать</button>
+                <button onclick="clearEditor()">🗑️ Очистить</button>
+                <button onclick="loadExample()">📋 Загрузить пример</button>
+
+                <div class="output" id="output">
+Результат появится здесь...
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h2>🎯 Проверь свои знания</h2>
+            
+            <div class="question">
+                <p><strong>1. Какой символ используется для обозначения списков в YAML?</strong></p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> A) *</label>
+                    <label><input type="radio" name="q1" value="B"> B) -</label>
+                    <label><input type="radio" name="q1" value="C"> C) +</label>
+                    <label><input type="radio" name="q1" value="D"> D) •</label>
+                </div>
+                <button onclick="checkAnswer(1)">Проверить ответ</button>
+                <div id="result1"></div>
+            </div>
+
+            <div class="question">
+                <p><strong>2. Как обозначаются комментарии в YAML?</strong></p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> A) //</label>
+                    <label><input type="radio" name="q2" value="B"> B) #</label>
+                    <label><input type="radio" name="q2" value="C"> C) --</label>
+                    <label><input type="radio" name="q2" value="D"> D) /* */</label>
+                </div>
+                <button onclick="checkAnswer(2)">Проверить ответ</button>
+                <div id="result2"></div>
+            </div>
+
+            <div class="question">
+                <p><strong>3. Какое расширение файла обычно используется для YAML?</strong></p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> A) .yaml</label>
+                    <label><input type="radio" name="q3" value="B"> B) .yml</label>
+                    <label><input type="radio" name="q3" value="C"> C) Оба варианта верны</label>
+                    <label><input type="radio" name="q3" value="D"> D) .ym</label>
+                </div>
+                <button onclick="checkAnswer(3)">Проверить ответ</button>
+                <div id="result3"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>YAML Tutorial &copy; 2024. Идеально для начинающих разработчиков!</p>
+    </footer>
+
+    <script>
+        // Подключаем библиотеку js-yaml
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js';
+        document.head.appendChild(script);
+
+        script.onload = function() {
+            console.log('YAML library loaded');
+        };
+
+        function validateYAML() {
+            const yamlText = document.getElementById('yamlInput').value;
+            const output = document.getElementById('output');
+            
+            try {
+                const result = jsyaml.load(yamlText);
+                output.innerHTML = '<span style="color: #a6e22e">✅ YAML синтаксис корректен!</span>\n\n';
+                output.innerHTML += 'Результат парсинга:\n' + JSON.stringify(result, null, 2);
+                output.style.color = '#f8f8f2';
+            } catch (error) {
+                output.innerHTML = '<span style="color: #f92672">❌ Ошибка в YAML синтаксисе:</span>\n' + error.message;
+                output.style.color = '#f8f8f2';
+            }
+        }
+
+        function formatYAML() {
+            const yamlText = document.getElementById('yamlInput').value;
+            
+            try {
+                const obj = jsyaml.load(yamlText);
+                const formatted = jsyaml.dump(obj, { indent: 2 });
+                document.getElementById('yamlInput').value = formatted;
+                document.getElementById('output').innerHTML = '✅ YAML отформатирован!';
+            } catch (error) {
+                document.getElementById('output').innerHTML = '❌ Ошибка форматирования: ' + error.message;
+            }
+        }
+
+        function clearEditor() {
+            document.getElementById('yamlInput').value = '';
+            document.getElementById('output').innerHTML = 'Результат появится здесь...';
+        }
+
+        function loadExample() {
+            const example = `# Пример конфигурации веб-приложения
+app:
+  name: "Мое Приложение"
+  version: "1.0.0"
+  settings:
+    port: 3000
+    debug: true
+    database:
+      host: "localhost"
+      name: "myapp_db"
+
+features:
+  - "аутентификация"
+  - "API"
+  - "админ-панель"
+
+users:
+  - name: "Админ"
+    role: "admin"
+    permissions:
+      - read
+      - write
+      - delete
+
+  - name: "Пользователь"
+    role: "user"
+    permissions:
+      - read`;
+            
+            document.getElementById('yamlInput').value = example;
+            document.getElementById('output').innerHTML = '📋 Пример загружен!';
+        }
+
+        function checkAnswer(questionNum) {
+            const answers = {
+                1: 'B',
+                2: 'B', 
+                3: 'C'
+            };
+
+            const selected = document.querySelector(`input[name="q${questionNum}"]:checked`);
+            const resultDiv = document.getElementById(`result${questionNum}`);
+            
+            if (!selected) {
+                resultDiv.innerHTML = '<span style="color: orange">⚠️ Выберите ответ!</span>';
+                return;
+            }
+
+            if (selected.value === answers[questionNum]) {
+                resultDiv.innerHTML = '<span style="color: green">✅ Правильно! Отличная работа!</span>';
+            } else {
+                resultDiv.innerHTML = '<span style="color: red">❌ Неправильно. Попробуйте еще раз!</span>';
+            }
+        }
+
+        // Добавляем подсветку синтаксиса при вводе
+        document.getElementById('yamlInput').addEventListener('input', function() {
+            // Простая подсветка (в реальном проекте используйте библиотеки типа Prism.js)
+            const text = this.value;
+            // Здесь можно добавить более сложную логику подсветки
+        });
+    </script>
+<head>
+    <meta charset="UTF-8">
     <title>YAML Парсер для дипломной работы</title>
     <style>
         .editor-container {
